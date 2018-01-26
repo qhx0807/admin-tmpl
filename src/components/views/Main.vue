@@ -1,23 +1,30 @@
 <template>
   <div class="layout">
-    <div class="layout-left hidden-xs-only">
-      <div class="main-logo">Admin Tmpl</div>
-      <!-- background-color="#545c64" text-color="#fff" -->
-      <div class="user-panle">
-        <div class="user-panle-left">
-          <img src="../../assets/avatar.jpg">
-        </div>
-        <div class="user-panle-right">
-          <p>qhx0807</p>
-          <a>Super Administrator</a>
-        </div>
+    <div class="layout-left hidden-xs-only" :class="{collpase : collapse}">
+      <div class="main-logo">
+        <span v-show="!collapse">Admin Tmpl</span>
+        <span v-show="collapse">A</span>
       </div>
-      <div class="search-panel">
+      <!-- background-color="#545c64" text-color="#fff" -->
+      <div class="user-panle" >
+        <div class="user-panle-left">
+          <img src="../../assets/avatar.jpg" :class="{small : collapse}">
+        </div>
+        <transition name="fade">
+          <div class="user-panle-right" v-show="!collapse">
+            <p>qhx0807</p>
+            <a>Super Administrator</a>
+          </div>
+        </transition>
+      </div>
+      <div class="search-panel" v-show="!collapse">
         <input type="text" placeholder="Search...">
         <i class="el-icon-search"></i>
       </div>
-      <div class="menu-title">主导航</div>
-      <el-menu collapse
+      <div class="menu-title" v-show="!collapse">主导航</div>
+      <div class="menu-warp">
+        <el-menu
+        :collapse="collapse"
         default-active="2"
         class="el-menu-vertical-demo"
         background-color="#222d32"
@@ -50,11 +57,14 @@
           <span slot="title">导航三</span>
         </el-menu-item>
       </el-menu>
+      </div>
+
     </div>
     <div class="layout-right">
       <header class="main-header">
+        <a href="" class="main-title hidden-sm-and-up">Admin Tmpl</a>
         <nav class="main-nav">
-          <span class="toggle-nav"><i class="iconfont icon-menu"></i></span>
+          <span class="toggle-nav" @click="collapse = !collapse"><i class="iconfont icon-menu"></i></span>
           <div class="nav-menu">
             <ul>
               <li>sss</li>
@@ -62,6 +72,7 @@
           </div>
         </nav>
       </header>
+      123
     </div>
   </div>
 </template>
@@ -71,7 +82,7 @@ export default {
   name: 'home',
   data () {
     return {
-
+      collapse: false
     }
   }
 }
@@ -93,11 +104,15 @@ $menucolor: #4b646f;
     width: $width;
     background-color: $bgcolor;
     height: 100%;
+    transition: width .3s ease;
+    &.collpase{
+      width: 64px!important;
+    }
     .el-menu{
       border: none;
     }
     .main-logo{
-      width: $width;
+      width: 100%;
       height: $height;
       line-height: $height;
       text-align: center;
@@ -168,6 +183,20 @@ $menucolor: #4b646f;
       padding: 10px 15px;
       font-size: 12px;
     }
+    .menu-warp{
+      height: 600px;
+      // overflow: auto;
+      &::-webkit-scrollbar{
+        width: 5px;
+        height: 1px;
+      }
+      &::-webkit-scrollbar-thumb{
+        background-color: $deepBgcolor;
+      }
+      &::-webkit-scrollbar-track{
+        background: $bgcolor;
+      }
+    }
     .el-menu-item [class^="el-icon-"],.el-submenu [class^="el-icon-"]{
       margin-right: 0!important;
     }
@@ -175,9 +204,23 @@ $menucolor: #4b646f;
   &-right{
     flex: 1;
     .main-header{
-      height: $height;
+      // height: $height;
       background-color: $color;
-      box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);
+      // box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);
+      .main-title{
+        display: block;
+        height: 50px;
+        background-color: $deepBgcolor;
+        color: #fff;
+        transition: all .3s ease-in-out;
+        font-size: 20px;
+        line-height: 50px;
+        text-align: center;
+        padding: 0 15px;
+        font-weight: 300;
+        overflow: hidden;
+        text-decoration: none;
+      }
       .main-nav{
         flex: 1;
         height: $height;
@@ -204,5 +247,11 @@ $menucolor: #4b646f;
       }
     }
   }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .4s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
