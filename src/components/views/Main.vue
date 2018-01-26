@@ -1,46 +1,60 @@
 <template>
   <div class="layout">
-
-    <div class="layout-left">
+    <div class="layout-left hidden-xs-only">
       <div class="main-logo">Admin Tmpl</div>
-      <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
+      <!-- background-color="#545c64" text-color="#fff" -->
+      <div class="user-panle">
+        <div class="user-panle-left">
+          <img src="../../assets/avatar.jpg">
+        </div>
+        <div class="user-panle-right">
+          <p>qhx0807</p>
+          <a>Super Administrator</a>
+        </div>
+      </div>
+      <div class="search-panel">
+        <input type="text" placeholder="Search...">
+        <i class="el-icon-search"></i>
+      </div>
+      <div class="menu-title">主导航</div>
+      <el-menu collapse
+        default-active="2"
+        class="el-menu-vertical-demo"
+        background-color="#222d32"
+        text-color="#b8c7ce"
+        active-text-color="#ffd04b">
+        <el-submenu index="1">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>导航一</span>
+          </template>
+          <el-menu-item-group>
+            <template slot="title">分组一</template>
+            <el-menu-item index="1-1">选项1</el-menu-item>
+            <el-menu-item index="1-2">选项2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="分组2">
+            <el-menu-item index="1-3">选项3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="1-4">
+            <template slot="title">选项4</template>
+            <el-menu-item index="1-4-1">选项1</el-menu-item>
+          </el-submenu>
         </el-submenu>
-      </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-    </el-menu>
+        <el-menu-item index="2">
+          <i class="el-icon-menu"></i>
+          <span slot="title">导航二</span>
+        </el-menu-item>
+        <el-menu-item index="3">
+          <i class="el-icon-setting"></i>
+          <span slot="title">导航三</span>
+        </el-menu-item>
+      </el-menu>
     </div>
     <div class="layout-right">
       <header class="main-header">
         <nav class="main-nav">
-          <span><i class="el-icon-d-arrow-left"></i></span>
+          <span class="toggle-nav"><i class="iconfont icon-menu"></i></span>
           <div class="nav-menu">
             <ul>
               <li>sss</li>
@@ -65,14 +79,20 @@ export default {
 
 <style lang="scss" scoped>
 $height: 50px;
-$width: 240px;
-$color: #3c8dbc;
+$width: 220px;
+$color: #fff;
 $bgcolor: #222d32;
+$deepBgcolor: #1a2226;
+$menucolor: #4b646f;
 .layout{
   display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #F0F0F0;
   &-left{
     width: $width;
     background-color: $bgcolor;
+    height: 100%;
     .el-menu{
       border: none;
     }
@@ -83,8 +103,73 @@ $bgcolor: #222d32;
       text-align: center;
       color: #fff;
       font-weight: 700;
-      background-color: darken($color: $color, $amount: 4%);
+      background-color: $deepBgcolor;
       font-size: 20px;
+    }
+    .user-panle{
+      height: 65px;
+      padding: 10px;
+      display: flex;
+      &-left{
+        width: 45px;
+        img{
+          height: 100%;
+          width: 100%;
+          border-radius: 50%;
+        }
+      }
+      &-right{
+        flex: 1;
+        padding: 5px 5px 5px 15px;
+        p{
+          font-weight: 700;
+          color: #fff;
+          padding: 0;
+          margin: 0;
+          margin-bottom: 5px;
+          font-size: 14px;
+        }
+        a{
+          font-size: 12px;
+          color: #fff;
+        }
+      }
+    }
+    .search-panel{
+      padding: 10px;
+      position: relative;
+      input{
+        height: 35px;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        padding: 6px 12px;
+        color: #666;
+        background-color: #374850;
+        border-radius: 2px;
+        &:focus{
+          background-color: #fff;
+        }
+      }
+      i{
+        position: absolute;
+        color: #999;
+        font-size: 16px;
+        font-weight: 700;
+        right: 20px;
+        top: 20px;
+      }
+
+    }
+    .menu-title{
+      background-color: $deepBgcolor;
+      color: $menucolor;
+      padding: 10px 15px;
+      font-size: 12px;
+    }
+    .el-menu-item [class^="el-icon-"],.el-submenu [class^="el-icon-"]{
+      margin-right: 0!important;
     }
   }
   &-right{
@@ -92,11 +177,22 @@ $bgcolor: #222d32;
     .main-header{
       height: $height;
       background-color: $color;
+      box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);
       .main-nav{
         flex: 1;
         height: $height;
         line-height: $height;
-        color: #fff;
+        color: #999;
+        .toggle-nav{
+          height: $height;
+          line-height: $height;
+          padding: 0 14px;
+          display: inline-block;
+          cursor: pointer;
+          &:hover{
+            background-color: darken($color: $color, $amount: 4%);
+          }
+        }
         .nav-menu{
           float: right;
           ul{

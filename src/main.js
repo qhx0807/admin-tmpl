@@ -6,6 +6,7 @@ import router from './router'
 
 import ElementUI from 'element-ui'
 import '../theme/element-variables.scss'
+import 'element-ui/lib/theme-chalk/display.css'
 
 Vue.config.productionTip = false
 
