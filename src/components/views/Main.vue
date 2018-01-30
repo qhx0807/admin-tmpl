@@ -67,12 +67,19 @@
           <span class="toggle-nav" @click="collapse = !collapse"><i class="iconfont icon-menu"></i></span>
           <div class="nav-menu">
             <ul>
-              <li>sss</li>
+              <li>
+                <img class="avatar" src="../../assets/avatar.jpg" alt="">
+                <span class="name">qhx0807</span>
+              </li>
+              <li><i class="el-icon-setting"></i></li>
             </ul>
           </div>
         </nav>
       </header>
-      123
+      <div class="layout-content">
+        <router-view></router-view>
+      </div>
+
     </div>
   </div>
 </template>
@@ -97,6 +104,9 @@ $deepBgcolor: #1a2226;
 $menucolor: #4b646f;
 .layout{
   display: flex;
+  display: -webkit-box;
+  display: -ms-flex-box;
+  display: -webkit-flex;
   height: 100%;
   width: 100%;
   background-color: #F0F0F0;
@@ -184,8 +194,8 @@ $menucolor: #4b646f;
       font-size: 12px;
     }
     .menu-warp{
-      height: 600px;
-      // overflow: auto;
+      // height: 300px;
+      // overflow: inherit;
       &::-webkit-scrollbar{
         width: 5px;
         height: 1px;
@@ -207,6 +217,10 @@ $menucolor: #4b646f;
       // height: $height;
       background-color: $color;
       // box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);
+      // position: fixed;
+      // right: 0;
+      // left: $width;
+      // transition: all .3s ease-in-out;
       .main-title{
         display: block;
         height: 50px;
@@ -242,9 +256,37 @@ $menucolor: #4b646f;
             padding: 0;
             margin: 0;
             list-style: none;
+            li{
+              height: 50px;
+              padding: 0 14px;
+              float: left;
+              border-left: 1px solid #eee;
+              vertical-align: middle;
+              color: #333;
+              cursor: pointer;
+              &:hover{
+                color: rgb(124, 124, 124);
+              }
+              .avatar{
+                height: 25px;
+                width: 25px;
+                vertical-align: middle;
+                border-radius: 50%;
+              }
+              .name{
+                vertical-align: middle;
+                font-size: 14px;
+              }
+            }
           }
         }
       }
+    }
+    .layout-content{
+      padding: 10px;
+      width: 100%;
+      height: calc(100% - 50px);
+      overflow: hidden;
     }
   }
 }
