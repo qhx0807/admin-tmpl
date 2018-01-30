@@ -8,6 +8,8 @@ import ElementUI from 'element-ui'
 import '../theme/element-variables.scss'
 import 'element-ui/lib/theme-chalk/display.css'
 
+import 'babel-polyfill'
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
