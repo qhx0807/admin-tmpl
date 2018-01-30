@@ -154,6 +154,16 @@ export default {
             6.2
           ]
         }
+      ],
+      media: [
+        {
+          query: {maxWidth: 768},
+          option: {
+            legend: {
+              right: 'center',
+            }
+          }
+        },
       ]
     }
     var myChart = echarts.init(document.getElementById('main'))
