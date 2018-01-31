@@ -3,7 +3,6 @@ import axios from 'axios'
 const apiUrl = 'http://120.76.167.113:9001/HandlerESY.ashx'
 
 const postApi = (methodName, params, succFoo, errorFoo) => {
-  console.log(params)
   axios({
     method: 'post',
     url: apiUrl,
