@@ -268,9 +268,9 @@ $menucolor: #4b646f;
   overflow: inherit;
 }
 
-.el-main{
-  background-color: #f8f8f8;
-}
+// .el-main{
+//   background-color: #f8f8f8;
+// }
 .el-popover{
   padding: 0!important;
 }
