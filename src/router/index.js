@@ -4,6 +4,7 @@ import Home from '@/components/views/Home'
 import Login from '@/components/views/Login'
 import Table from '@/components/table/Table'
 import Chart from '@/components/chart/Chart'
+import Dashboard from '@/components/dashboard/Dashboard'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
           path: '/chart',
           name: 'Chart',
           component: Chart
+        },
+        {
+          path: '/dashboard',
+          name: 'Dashboard',
+          component: Dashboard
         }
       ]
     }

@@ -26,36 +26,14 @@
         <div class="menu-warp">
           <el-menu
           :collapse="collapse"
-          default-active="2"
+          default-active="yyy0"
           class="el-menu-vertical-demo"
           background-color="#222d32"
           text-color="#b8c7ce"
           active-text-color="#ffd04b">
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
-            </template>
-            <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航三</span>
+          <el-menu-item v-for="(item, index) in menu" :key="index" :index="item.url">
+            <i :class="[item.icon]"></i>
+            <span slot="title">{{item.name}}</span>
           </el-menu-item>
         </el-menu>
         </div>
@@ -73,35 +51,13 @@
               trigger="click"
               :disabled="xsMenuShow">
               <el-menu
-                default-active="2"
+                default-active="yyy0"
                 class="el-menu-vertical-demo"
                 text-color="#b8c7ce"
                 active-text-color="#ffd04b">
-                <el-submenu index="1">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>导航一</span>
-                  </template>
-                  <el-menu-item-group>
-                    <template slot="title">分组一</template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                  </el-menu-item-group>
-                  <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                  </el-menu-item-group>
-                  <el-submenu index="1-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="1-4-1">选项1</el-menu-item>
-                  </el-submenu>
-                </el-submenu>
-                <el-menu-item index="2">
-                  <i class="el-icon-menu"></i>
-                  <span slot="title">导航二</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">导航三</span>
+                <el-menu-item v-for="(item, index) in menu" :key="index" :index="item.url">
+                  <i :class="[item.icon]"></i>
+                  <span slot="title">{{item.name}}</span>
                 </el-menu-item>
               </el-menu>
             </el-popover>
@@ -130,7 +86,44 @@ export default {
   data () {
     return {
       collapse: false,
-      xsMenuShow: true
+      xsMenuShow: true,
+      menu: [
+        {
+          name:'数据分析',
+          url:'yyy0',
+          icon: 'el-icon-tickets'
+        },
+        {
+          name:'预算支出明细表（部门）',
+          url:'yyy1',
+          icon: 'el-icon-document'
+        },
+        {
+          name:'预算项目明细表',
+          url:'yyy2',
+          icon: 'el-icon-menu'
+        },
+        {
+          name:'预算支出明细',
+          url:'yyy3',
+          icon: 'el-icon-more'
+        },
+        {
+          name:'院系教行费（部门）',
+          url:'yyy4',
+          icon: 'el-icon-share'
+        },
+        {
+          name:'院系教行费（项目）',
+          url:'yyy5',
+          icon: 'el-icon-star-on'
+        },
+        {
+          name:'部门申报合计对比表',
+          url:'yyy6',
+          icon: 'el-icon-sort'
+        }
+      ]
     }
   },
   methods: {
@@ -266,6 +259,10 @@ $menucolor: #4b646f;
 }
 .el-aside{
   overflow: inherit;
+}
+
+.el-main{
+  background-color: #f8f8f8;
 }
 
 .main-header {

@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col :span="24">
-      <div id="main"></div>
+      <div id="main" style="width: 100%;height:400px;"></div>
     </el-col>
   </el-row>
 </template>
@@ -12,28 +12,10 @@ export default {
   name: 'chart',
   data() {
     return {
-      option: {
-        title: {
-          text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [
-          {
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-          }
-        ]
-      }
     }
   },
   mounted() {
     var option = {
-      color: ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -154,16 +136,6 @@ export default {
             6.2
           ]
         }
-      ],
-      media: [
-        {
-          query: {maxWidth: 768},
-          option: {
-            legend: {
-              right: 'center',
-            }
-          }
-        },
       ]
     }
     var myChart = echarts.init(document.getElementById('main'))
@@ -174,7 +146,7 @@ export default {
 
 <style lang="scss" scoped>
 #mian{
-  width: 100%;
+  width: 900px;
   height: 400px;
   overflow: hidden;
 }
