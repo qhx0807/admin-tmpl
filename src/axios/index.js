@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const apiUrl = 'http://120.76.167.113:9001/HandlerESY.ashx'
 
-export const postApi = (methodName, params, succFoo, errorFoo) => {
+const postApi = (methodName, params, succFoo, errorFoo) => {
+  console.log(params)
   axios({
     method: 'post',
     url: apiUrl,
@@ -27,3 +28,5 @@ export const postApi = (methodName, params, succFoo, errorFoo) => {
       errorFoo(error)
     })
 }
+
+export default postApi
