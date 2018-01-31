@@ -26,11 +26,12 @@
         <div class="menu-warp">
           <el-menu
           :collapse="collapse"
-          default-active="yyy0"
+          default-active="Dashboard"
           class="el-menu-vertical-demo"
           background-color="#222d32"
           text-color="#b8c7ce"
-          active-text-color="#ffd04b">
+          active-text-color="#ffd04b"
+          @select="onSelectMenu">
           <el-menu-item v-for="(item, index) in menu" :key="index" :index="item.url">
             <i :class="[item.icon]"></i>
             <span slot="title">{{item.name}}</span>
@@ -45,15 +46,18 @@
           <a class="main-title hidden-sm-and-up">Admin Tmpl</a>
           <nav class="main-nav">
             <el-popover
+              popper-class="menu-proper"
               ref="popover1"
               placement="top-start"
-              width="200"
+              width="220"
               trigger="click"
+              style="padding:0;"
               :disabled="xsMenuShow">
               <el-menu
-                default-active="yyy0"
+                default-active="Dashboard"
                 class="el-menu-vertical-demo"
                 text-color="#b8c7ce"
+                @select="onSelectMenu"
                 active-text-color="#ffd04b">
                 <el-menu-item v-for="(item, index) in menu" :key="index" :index="item.url">
                   <i :class="[item.icon]"></i>
@@ -90,37 +94,37 @@ export default {
       menu: [
         {
           name:'数据分析',
-          url:'yyy0',
+          url:'Dashboard',
           icon: 'el-icon-tickets'
         },
         {
-          name:'预算支出明细表（部门）',
-          url:'yyy1',
+          name:'预算支出明细（部门）',
+          url:'Table1',
           icon: 'el-icon-document'
         },
         {
-          name:'预算项目明细表',
-          url:'yyy2',
+          name:'预算支出明细（项目）',
+          url:'Table2',
           icon: 'el-icon-menu'
         },
         {
           name:'预算支出明细',
-          url:'yyy3',
+          url:'Table3',
           icon: 'el-icon-more'
         },
         {
           name:'院系教行费（部门）',
-          url:'yyy4',
+          url:'Table4',
           icon: 'el-icon-share'
         },
         {
           name:'院系教行费（项目）',
-          url:'yyy5',
+          url:'Table5',
           icon: 'el-icon-star-on'
         },
         {
           name:'部门申报合计对比表',
-          url:'yyy6',
+          url:'Table6',
           icon: 'el-icon-sort'
         }
       ]
@@ -134,6 +138,9 @@ export default {
         this.xsMenuShow = true
         this.collapse = !this.collapse
       }
+    },
+    onSelectMenu (e) {
+      this.$router.push({name: e})
     }
   }
 }
@@ -264,7 +271,12 @@ $menucolor: #4b646f;
 .el-main{
   background-color: #f8f8f8;
 }
-
+.el-popover{
+  padding: 0!important;
+}
+.menu-proper{
+  padding: 0!important;
+}
 .main-header {
   // height: $height;
   background-color: $color;
