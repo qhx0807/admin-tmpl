@@ -12,7 +12,7 @@ import 'babel-polyfill'
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'medium' })
 
 /* eslint-disable no-new */
 new Vue({
