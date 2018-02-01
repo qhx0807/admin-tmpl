@@ -77,7 +77,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .renderTableHead{
   display: flex;
   span{

@@ -12,9 +12,8 @@
       <el-button size="small" icon="el-icon-printer" @click="exportExcel">导出EXCEL</el-button>
     </el-col>
     <el-col :span="24">
-
       <el-tabs v-model="activeTabName">
-        <el-tab-pane label="报表表格" name="first">
+        <el-tab-pane label="数据报表" name="first">
           <div style="width:100%">
             <el-table
               :data="tableData"
@@ -41,15 +40,19 @@
             </el-table>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="数据分析" name="second">配置管理</el-tab-pane>
+        <el-tab-pane label="图表分析" name="second">
+          <div style="width:100%; height:500px;">
+            <chart1></chart1>
+          </div>
+        </el-tab-pane>
       </el-tabs>
-
     </el-col>
   </el-row>
 </template>
 
 <script>
 import postApi from '../../axios/index.js'
+import chart1 from '../charts/Chart'
 export default {
   name: 'table1',
   data() {
@@ -61,6 +64,9 @@ export default {
       year: new Date(),
       queryLoading: false,
     }
+  },
+  components: {
+    chart1
   },
   created() {
     let n = new Date().getFullYear()
@@ -94,7 +100,7 @@ export default {
     },
     rendeHead(h, self){
       let year = this.year.getFullYear()
-      return h('span', {
+      return h('p', {
         'class': 'renderTableHead'
       },[`重庆第二师范学院${year}年预算项目明细表 （单位：万元）`])
     },
@@ -117,6 +123,7 @@ export default {
 <style lang="scss">
 .renderTableHead{
   text-align: center;
+  margin: 0;
 }
 </style>
 
