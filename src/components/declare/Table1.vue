@@ -1,19 +1,32 @@
 <template>
   <el-row>
     <el-col :span="24">
-        <div style="width:100%">
-          <el-table
-            :data="tableData"
-            size="mini"
-            style="width: 100%"
-            show-summary
-            resizable
-            border
-            v-loading="loading"
-            :max-height="tableBodyHeight"
-            >
-            <el-table-column label="重庆第二师范学院2017年预算项目明细表" width="100%" align="center">
-              <el-table-column label="重庆第二师范学院2017年预算项目明细表" width="100%" align="center" :render-header="rendeHead">
+      <el-date-picker
+        v-model="year"
+        type="year"
+        size="small"
+        style="width:160px"
+        placeholder="选择年份">
+      </el-date-picker>
+      <el-button style="margin-left:8px;" :loading="queryLoading" type="primary" size="small" icon="el-icon-search" @click="queryHandler">查询</el-button>
+      <el-button size="small" icon="el-icon-printer" @click="exportExcel">导出EXCEL</el-button>
+    </el-col>
+    <el-col :span="24">
+
+      <el-tabs v-model="activeTabName">
+        <el-tab-pane label="报表表格" name="first">
+          <div style="width:100%">
+            <el-table
+              :data="tableData"
+              size="mini"
+              style="width: 100%"
+              show-summary
+              resizable
+              border
+              v-loading="loading"
+              :max-height="tableBodyHeight"
+              >
+              <el-table-column label="重庆第二师范学院2017年预算项目明细表 （单位：万元）" width="100%" align="center" :render-header="rendeHead">
                 <el-table-column type="index" label="序号" width="50"></el-table-column>
                 <el-table-column prop="bmbh" label="部门编号" width="100" sortable></el-table-column>
                 <el-table-column prop="bmmc" label="部门名称" sortable></el-table-column>
@@ -25,10 +38,12 @@
                 <el-table-column prop="bnys" label="二下建议安排数" sortable></el-table-column>
                 <el-table-column prop="bnzx" label="本年执行数" sortable></el-table-column>
               </el-table-column>
-            </el-table-column>
+            </el-table>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="数据分析" name="second">配置管理</el-tab-pane>
+      </el-tabs>
 
-          </el-table>
-        </div>
     </el-col>
   </el-row>
 </template>
@@ -41,19 +56,27 @@ export default {
     return {
       tableData: [],
       tableBodyHeight: 500,
-      loading: true
+      loading: true,
+      activeTabName:'first',
+      year: new Date(),
+      queryLoading: false,
     }
   },
   created() {
-    this.loadTableData()
+    let n = new Date().getFullYear()
+    this.loadTableData(n)
   },
   mounted () {
     let winH = document.body.clientHeight
-    this.tableBodyHeight = winH -100
+    this.tableBodyHeight = winH -180
   },
   methods: {
-    loadTableData(){
-      let option = {kjnd: '2017'}
+    loadTableData(year){
+      if(!year){
+        return false
+      }
+      this.loading = true
+      let option = {kjnd: year}
       postApi('ESYysgl_BMhzb', option, (response) => {
         if(response.data.Status == 1){
           let obj = JSON.parse(response.data.Data)
@@ -62,40 +85,38 @@ export default {
           this.$message(response.data.Message)
         }
         this.loading = false
+        this.queryLoading = false
       }, (error) => {
         this.loading = false
+        this.queryLoading = false
         console.log(error)
       })
     },
     rendeHead(h, self){
-      return h('header', {
+      let year = this.year.getFullYear()
+      return h('span', {
         'class': 'renderTableHead'
-      },[
-        h('span',{'class': 'info'},['编制单位：重庆第二师范学院']),
-        h('span',{'class': 'info'},['年度：2017年']),
-        h('span',{'class': 'info'},['单位：万元'])
-      ])
+      },[`重庆第二师范学院${year}年预算项目明细表 （单位：万元）`])
+    },
+    queryHandler(){
+      if(!this.year){
+        this.$message("请选择年份，再查询数据！")
+        return false
+      }
+      this.queryLoading = true
+      let n = this.year.getFullYear()
+      this.loadTableData(n)
+    },
+    exportExcel(){
+
     }
   }
 }
 </script>
 
 <style lang="scss">
-.el-table thead.is-group th{
-  // background-color: #fff;
-}
 .renderTableHead{
-  display: flex;
-  span{
-    flex: 1;
-    font-weight: normal;
-    &:first-child{
-      text-align: left;
-    }
-    &:last-child{
-      text-align: right;
-    }
-  }
+  text-align: center;
 }
 </style>
 
