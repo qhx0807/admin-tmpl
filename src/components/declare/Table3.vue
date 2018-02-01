@@ -20,12 +20,12 @@
                   <el-table-column prop="bmmc" label="名称" sortable></el-table-column>
                 </el-table-column>
                 <el-table-column label="项目" align="center">
-                  <el-table-column prop="bmbh" label="编号" sortable></el-table-column>
+                  <el-table-column prop="xmbh" label="编号" sortable></el-table-column>
                   <el-table-column prop="xmmc" label="名称" sortable></el-table-column>
                 </el-table-column>
                 <el-table-column label="费用" align="center">
-                  <el-table-column prop="bmbh" label="编号" sortable></el-table-column>
-                  <el-table-column prop="xmmc" label="名称" sortable></el-table-column>
+                  <el-table-column prop="edkzbm" label="编号" sortable></el-table-column>
+                  <el-table-column prop="edkzmc" label="名称" sortable></el-table-column>
                 </el-table-column>
                 <el-table-column prop="snys" label="2017年预算金额" sortable></el-table-column>
                 <el-table-column prop="snzx" label="备注" sortable></el-table-column>

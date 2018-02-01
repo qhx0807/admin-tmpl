@@ -13,7 +13,7 @@
           </div>
           <transition name="fade">
             <div class="user-panle-right" v-show="!collapse">
-              <p>qhx0807</p>
+              <p>{{name}}</p>
               <a>Administrator</a>
             </div>
           </transition>
@@ -70,7 +70,7 @@
               <ul>
                 <li>
                   <img class="avatar" src="../../assets/avatar.jpg" alt="">
-                  <span class="name">qhx0807</span>
+                  <span class="name">{{name}}</span>
                 </li>
                 <li><i class="el-icon-setting"></i></li>
               </ul>
@@ -127,7 +127,16 @@ export default {
           url:'Table6',
           icon: 'el-icon-sort'
         }
-      ]
+      ],
+      name: ''
+    }
+  },
+  created () {
+    let name = window.sessionStorage.name
+    if(name){
+      this.name = name
+    }else{
+      this.$router.replace({name: 'Login'})
     }
   },
   methods: {

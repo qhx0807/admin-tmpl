@@ -21,7 +21,7 @@
                     <el-table-column prop="bmmc" label="部门" sortable></el-table-column>
                   </el-table-column>
                   <el-table-column label="款—项目">
-                    <el-table-column prop="bmbh" label="编号" sortable></el-table-column>
+                    <el-table-column prop="xmbh" label="编号" sortable></el-table-column>
                     <el-table-column prop="xmmc" label="项目" sortable></el-table-column>
                   </el-table-column>
                 </el-table-column>

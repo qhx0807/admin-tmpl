@@ -11,7 +11,7 @@
           <el-input size="medium" prefix-icon="iconfont icon-password" type="password" v-model="formLabelAlign.password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" size="medium" @click="submitForm('ruleForm')">立即登录</el-button>
+          <el-button type="primary" size="medium" @click="submitForm('ruleForm')" :loading="loading">立即登录</el-button>
           <el-button size="medium" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import postApi from '../../axios/index.js'
 export default {
   name: 'login',
   data() {
@@ -28,6 +29,7 @@ export default {
         name: '',
         password: ''
       },
+      loading: false,
       rules: {
           name: [
             { required: true, message: '请输入账号名称', trigger: 'blur' }
@@ -159,7 +161,25 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          this.loading = true
+          let option = {
+            yhbh: this.formLabelAlign.name,
+            yhmm: this.formLabelAlign.password
+          }
+          postApi('ESYysgl_Login', option, (response) => {
+            if(response.data.Status == 1){
+              let obj = JSON.parse(response.data.Data)
+              window.sessionStorage.setItem("name", obj[0].yhmc)
+              this.$router.replace({name: 'Dashboard'})
+              this.$message('登录成功！')
+            }else{
+              this.$message(response.data.Message)
+            }
+            this.loading = false
+          }, (error) => {
+            this.loading = false
+            console.log(error)
+          })
         } else {
           console.log('error submit!!')
           return false;
