@@ -10,7 +10,6 @@ const Login = r => require.ensure([], () => r(require('@/components/views/Login'
 const Home = r => require.ensure([], () => r(require('@/components/views/Home')))
 const Table = r => require.ensure([], () => r(require('@/components/table/Table')))
 const Dashboard = r => require.ensure([], () => r(require('@/components/dashboard/Dashboard')))
-const Chart = r => require.ensure([], () => r(require('@/components/chart/Chart')))
 const Table1 = r => require.ensure([], () => r(require('@/components/declare/Table1')))
 const Table2 = r => require.ensure([], () => r(require('@/components/declare/Table2')))
 const Table3 = r => require.ensure([], () => r(require('@/components/declare/Table3')))
@@ -35,11 +34,6 @@ export default new Router({
           path: '/table',
           name: 'Table',
           component: Table
-        },
-        {
-          path: '/chart',
-          name: 'Chart',
-          component: Chart
         },
         {
           path: '/dashboard',
