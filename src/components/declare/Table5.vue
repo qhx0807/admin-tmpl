@@ -9,6 +9,7 @@
             show-summary
             resizable
             border
+            v-loading="loading"
             :max-height="tableBodyHeight"
             >
             <el-table-column label="重庆第二师范学院2017年院系预算教行费明细表" width="100%" align="center">
@@ -45,7 +46,8 @@ export default {
   data() {
     return {
       tableData: [],
-      tableBodyHeight: 500
+      tableBodyHeight: 500,
+      loading: true
     }
   },
   created() {
@@ -65,8 +67,10 @@ export default {
         }else{
           this.$message(response.data.Message)
         }
+        this.loading = false
       }, (error) => {
         console.log(error)
+        this.loading = false
       })
     },
     rendeHead(h, self){

@@ -9,6 +9,7 @@
             show-summary
             resizable
             border
+            v-loading="loading"
             :max-height="tableBodyHeight"
             >
             <el-table-column label="重庆第二师范学院2017年预算项目明细表" width="100%" align="center">
@@ -39,7 +40,8 @@ export default {
   data() {
     return {
       tableData: [],
-      tableBodyHeight: 500
+      tableBodyHeight: 500,
+      loading: true
     }
   },
   created() {
@@ -59,7 +61,9 @@ export default {
         }else{
           this.$message(response.data.Message)
         }
+        this.loading = false
       }, (error) => {
+        this.loading = false
         console.log(error)
       })
     },

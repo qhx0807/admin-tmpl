@@ -9,6 +9,7 @@
             show-summary
             resizable
             border
+            v-loading="loading"
             :max-height="tableBodyHeight"
             >
             <el-table-column label="2016、2017两年部门申报合计数对比表" width="100%" align="center">
@@ -36,7 +37,8 @@ export default {
   data() {
     return {
       tableData: [],
-      tableBodyHeight: 500
+      tableBodyHeight: 500,
+      loading: true
     }
   },
   created() {
@@ -56,8 +58,10 @@ export default {
         }else{
           this.$message(response.data.Message)
         }
+        this.loading = false
       }, (error) => {
         console.log(error)
+        this.loading = false
       })
     },
     rendeHead(h, self){
