@@ -130,7 +130,7 @@ export default {
             }
             let option = {
               title: {
-                text: "重庆第二师范学院"+ e +"年预算项目明细表",
+                text: "xxxxxxxxxxx"+ e +"年预算项目明细表",
                 top: "0",
                 left: "37%"
               },

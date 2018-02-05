@@ -67,12 +67,25 @@
             </el-popover>
             <span class="toggle-nav" @click="toggle" v-popover:popover1><i class="iconfont icon-menu"></i></span>
             <div class="nav-menu">
+              <el-popover
+                ref="popover1"
+                placement="bottom-end"
+                width="150"
+                trigger="hover">
+                <div class="user-menu">
+                  <ul>
+                    <li><i class="iconfont icon-user"></i>个人信息</li>
+                    <li><i class="iconfont icon-password"></i>修改密码</li>
+                    <li @click="powerOff"><i class="iconfont icon-poweroff"></i>退出登录</li>
+                  </ul>
+                </div>
+              </el-popover>
               <ul>
                 <li>
                   <img class="avatar" src="../../assets/avatar.jpg" alt="">
                   <span class="name">{{name}}</span>
                 </li>
-                <li><i class="el-icon-setting"></i></li>
+                <li v-popover:popover1><i class="el-icon-setting"></i></li>
               </ul>
             </div>
           </nav>
@@ -150,6 +163,18 @@ export default {
     },
     onSelectMenu (e) {
       this.$router.push({name: e})
+    },
+    powerOff(){
+      this.$confirm('退出当前登录账户, 是否继续?', '提示', {
+          type: 'warning'
+        }).then(() => {
+          this.$router.replace({name: 'Login'})
+          window.sessionStorage.clear()
+          this.$message({
+            type: 'success',
+            message: '已退出!'
+          })
+        }).catch(() => {})
     }
   }
 }
@@ -359,5 +384,25 @@ $menucolor: #4b646f;
 
 .el-submenu .el-menu-item{
   min-width: auto;
+}
+.user-menu{
+  ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li{
+      height: 35px;
+      line-height: 35px;
+      cursor: pointer;
+      // text-align: center;
+      i{
+        font-size: 14px;
+        margin-right: 8px;
+      }
+      &:hover{
+        background-color: #f8f8f8;
+      }
+    }
+  }
 }
 </style>
