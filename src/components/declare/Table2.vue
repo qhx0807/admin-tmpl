@@ -108,7 +108,7 @@ export default {
       let year = this.year.getFullYear()
       return h('p', {
         'class': 'renderTableHead'
-      },[`重庆第二师范学院${year}年预算支出明细表 （单位：万元）`])
+      },[`xxxxxxxxxxxxxxx${year}年预算支出明细表 （单位：万元）`])
     },
     queryHandler(){
       if(!this.year){

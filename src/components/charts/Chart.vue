@@ -14,7 +14,7 @@ export default {
     var myChart = echarts.init(dom)
     var option = {
       title: {
-        text: 'ECharts 入门示例'
+        text: 'ECharts示例'
       },
       tooltip: {},
       legend: {
