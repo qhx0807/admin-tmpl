@@ -9,7 +9,7 @@
         placeholder="选择年份">
       </el-date-picker>
       <el-button style="margin-left:8px;" :loading="queryLoading" type="primary" size="small" icon="el-icon-search" @click="queryHandler">查询</el-button>
-      <el-button size="small" icon="el-icon-printer" @click="exportExcel">导出EXCEL</el-button>
+      <el-button size="small" icon="el-icon-printer" @click="exportTable">导出EXCEL</el-button>
     </el-col>
     <el-col :span="24">
       <el-tabs v-model="activeTabName">
@@ -53,6 +53,7 @@
 <script>
 import postApi from '../../axios/index.js'
 import chart1 from '../charts/Chart'
+import { exportExcel } from '../../utlis/exportExcel'
 export default {
   name: 'table1',
   data() {
@@ -60,9 +61,9 @@ export default {
       tableData: [],
       tableBodyHeight: 500,
       loading: true,
-      activeTabName:'first',
+      activeTabName: 'first',
       year: new Date(),
-      queryLoading: false,
+      queryLoading: false
     }
   },
   components: {
@@ -72,58 +73,66 @@ export default {
     let n = new Date().getFullYear()
     this.loadTableData(n)
   },
-  mounted () {
+  mounted() {
     let winH = document.body.clientHeight
-    this.tableBodyHeight = winH -180
+    this.tableBodyHeight = winH - 180
   },
   methods: {
-    loadTableData(year){
-      if(!year){
+    loadTableData(year) {
+      if (!year) {
         return false
       }
       this.loading = true
-      let option = {kjnd: year}
-      postApi('ESYysgl_BMhzb', option, (response) => {
-        if(response.data.Status == 1){
-          let obj = JSON.parse(response.data.Data)
-          this.tableData = obj
-        }else{
-          this.$message(response.data.Message)
+      let option = { kjnd: year }
+      postApi(
+        'ESYysgl_BMhzb',
+        option,
+        response => {
+          if (response.data.Status == 1) {
+            let obj = JSON.parse(response.data.Data)
+            this.tableData = obj
+          } else {
+            this.$message(response.data.Message)
+          }
+          this.loading = false
+          this.queryLoading = false
+        },
+        error => {
+          this.loading = false
+          this.queryLoading = false
+          console.log(error)
         }
-        this.loading = false
-        this.queryLoading = false
-      }, (error) => {
-        this.loading = false
-        this.queryLoading = false
-        console.log(error)
-      })
+      )
     },
-    rendeHead(h, self){
+    rendeHead(h, self) {
       let year = this.year.getFullYear()
-      return h('p', {
-        'class': 'renderTableHead'
-      },[`xxxxxxxxxxxxxxx${year}年预算项目明细表 （单位：万元）`])
+      return h(
+        'p',
+        {
+          class: 'renderTableHead'
+        },
+        [`xxxxxxxxxxxxxxx${year}年预算项目明细表 （单位：万元）`]
+      )
     },
-    queryHandler(){
-      if(!this.year){
-        this.$message("请选择年份，再查询数据！")
+    queryHandler() {
+      if (!this.year) {
+        this.$message('请选择年份，再查询数据！')
         return false
       }
       this.queryLoading = true
       let n = this.year.getFullYear()
       this.loadTableData(n)
     },
-    exportExcel(){
-
-    }
+    exportTable() {
+      exportExcel(this.tableData, '预算项目明细表')
+    },
   }
 }
 </script>
 
 <style lang="scss">
-.renderTableHead{
+.renderTableHead {
   text-align: center;
   margin: 0;
 }
 </style>
-

@@ -30,6 +30,7 @@
 
 <script>
 import postApi from '../../axios/index.js'
+import { exportExcel } from '../../utlis/exportExcel'
 export default {
   name: 'table6',
   data() {

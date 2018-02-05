@@ -9,7 +9,7 @@
         placeholder="选择年份">
       </el-date-picker>
       <el-button style="margin-left:8px;" :loading="queryLoading" type="primary" size="small" icon="el-icon-search" @click="queryHandler">查询</el-button>
-      <el-button size="small" icon="el-icon-printer" @click="exportExcel">导出EXCEL</el-button>
+      <el-button size="small" icon="el-icon-printer" @click="exportTable">导出EXCEL</el-button>
     </el-col>
     <el-col :span="24">
       <el-tabs v-model="activeTabName">
@@ -62,6 +62,7 @@
 
 <script>
 import postApi from '../../axios/index.js'
+import { exportExcel } from '../../utlis/exportExcel'
 export default {
   name: 'table2',
   data() {
@@ -119,8 +120,8 @@ export default {
       let n = this.year.getFullYear()
       this.loadTableData(n)
     },
-    exportExcel(){
-
+    exportTable(){
+      exportExcel(this.tableData, '预算项目明细表')
     }
   }
 }
