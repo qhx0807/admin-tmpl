@@ -10,7 +10,7 @@
             <i class="iconfont icon-money-o moneys" style="color:#FFF;"></i>
           </div>
           <div class="rightbox">
-            <p>123456万元</p>
+            <p>{{topData.bnsb}}万元</p>
             <p>本年第一次申报数</p>
           </div>
         </el-card>
@@ -21,8 +21,8 @@
             <i class="iconfont icon-money-o moneys" style="color:#FFF;"></i>
           </div>
           <div class="rightbox">
-            <p>123456万元</p>
-            <p>本年第一次申报数</p>
+            <p>{{topData.bnjys}}万元</p>
+            <p>一下建议安排数</p>
           </div>
         </el-card>
       </el-col>
@@ -32,8 +32,8 @@
             <i class="iconfont icon-money-o moneys" style="color:#FFF;"></i>
           </div>
           <div class="rightbox">
-            <p>123456万元</p>
-            <p>本年第一次申报数</p>
+            <p>{{topData.bnsb2}}万元</p>
+            <p>本年第二次申报数</p>
           </div>
         </el-card>
       </el-col>
@@ -43,8 +43,8 @@
             <i class="iconfont icon-money-o moneys" style="color:#FFF;"></i>
           </div>
           <div class="rightbox">
-            <p>123456万元</p>
-            <p>本年第一次申报数</p>
+            <p>{{topData.bnys}}万元</p>
+            <p>二下建议安排数</p>
           </div>
         </el-card>
       </el-col>
@@ -81,23 +81,26 @@ export default {
       cardStyle: {
         padding: "0px"
       },
-      value1:new Date()
+      value1:new Date(),
+      topData:{},
     }
   },
   //一开始执行
   created() {
     this.tabOne(this.value1.getFullYear())
+    // this.loadTableData()
+    // this.getTopNum(this.value1.getFullYear())
     // this.tabTwo()
   },
-  //渲染完成执行
-  mounted() {},
   methods: {
     tabOne(e) {
-      let option = { kjnd: e }
+      let option = { kjnd: e, flag: '0' }
       postApi(
         "ESYysgl_BMhzb",
         option,
         response => {
+          // console.log(response)
+          this.getTopNum(this.value1.getFullYear())
           if (response.data.Status == 1) {
             let obj = JSON.parse(response.data.Data)
             // console.log(JSON.stringify(obj))
@@ -180,9 +183,28 @@ export default {
       )
     },
     time(e){
-      // console.log(e)
       this.tabOne(e.getFullYear())
-    }
+    },
+    getTopNum(e){
+      let option = { kjnd: e, flag: '1' }
+      postApi(
+        "ESYysgl_BMhzb",
+        option,
+        response => {
+          // console.log(response)
+          if (response.data.Status == 1) {
+            let obj = JSON.parse(response.data.Data)
+            this.topData = obj[0]
+            // console.log(this.topData)
+          } else {
+            this.$message(response.data.Message)
+          }
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    },
 
   }
 }
@@ -195,9 +217,9 @@ export default {
 }
 .leftbox {
   float: left;
-  height: 50px;
+  height: 70px;
   width: 50px;
-  line-height: 50px;
+  line-height: 70px;
   text-align: center;
   .moneys {
     font-size: 40px;
@@ -206,13 +228,13 @@ export default {
 }
 .rightbox {
   float: right;
-  height: 50px;
+  height: 70px;
   line-height: 22px;
   padding-right: 8px;
   padding-top: 3px;
   p {
     font-size: 14px;
-    margin: 0;
+    margin: 8px 0 0 0;
     text-align: right;
     color: #666;
   }
@@ -222,7 +244,7 @@ export default {
   margin-top: 20px;
 }
 .tabOne {
-  height: 420px;
+  height: 450px;
   width: 100%;
   padding-top: 24px;
 }
