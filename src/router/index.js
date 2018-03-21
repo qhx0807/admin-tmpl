@@ -17,6 +17,9 @@ const Table4 = r => require.ensure([], () => r(require('@/components/declare/Tab
 const Table5 = r => require.ensure([], () => r(require('@/components/declare/Table5')))
 const Table6 = r => require.ensure([], () => r(require('@/components/declare/Table6')))
 
+const btable1 = r => require.ensure([], () => r(require('@/components/budget/Table1')))
+const btable2 = r => require.ensure([], () => r(require('@/components/budget/Table2')))
+
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +72,16 @@ export default new Router({
           path: '/table6',
           name: 'Table6',
           component: Table6
+        },
+        {
+          path: '/btable1',
+          name: 'btable1',
+          component: btable1
+        },
+        {
+          path: '/btable2',
+          name: 'btable2',
+          component: btable2
         }
       ]
     }
