@@ -73,7 +73,7 @@
                 </el-menu-item>
               </el-menu>
             </el-popover> -->
-            <!-- <span class="toggle-nav" @click="toggle" v-popover:popover1><i class="iconfont icon-menu"></i></span> -->
+            <span class="toggle-nav" @click="toggle" v-popover:popover1><i class="iconfont icon-menu"></i></span>
             <div class="nav-menu">
               <el-popover
                 ref="popover1"
