@@ -31,11 +31,19 @@
           background-color="#222d32"
           text-color="#b8c7ce"
           active-text-color="#ffd04b"
+          unique-opened
           @select="onSelectMenu">
-          <el-menu-item v-for="(item, index) in menu" :key="index" :index="item.url">
+          <el-menu-item v-if="!item.childern" v-for="(item, index) in menu" :key="index" :index="item.url">
             <i :class="[item.icon]"></i>
             <span slot="title">{{item.name}}</span>
           </el-menu-item>
+          <el-submenu  v-if="item.childern" v-for="(item, index) in menu" :key="index" :index="'i-'+index">
+            <template slot="title">
+              <i :class="[item.icon]"></i>
+              <span>{{item.name}}</span>
+            </template>
+            <el-menu-item v-for="(n, index) in item.childern" :key="index" :index="n.url">{{n.name}}</el-menu-item>
+          </el-submenu>
         </el-menu>
         </div>
       </div>
@@ -45,7 +53,7 @@
         <header class="main-header">
           <a class="main-title hidden-sm-and-up">Admin Tmpl</a>
           <nav class="main-nav">
-            <el-popover
+            <!-- <el-popover
               popper-class="menu-proper"
               ref="popover1"
               placement="top-start"
@@ -64,8 +72,8 @@
                   <span slot="title">{{item.name}}</span>
                 </el-menu-item>
               </el-menu>
-            </el-popover>
-            <span class="toggle-nav" @click="toggle" v-popover:popover1><i class="iconfont icon-menu"></i></span>
+            </el-popover> -->
+            <!-- <span class="toggle-nav" @click="toggle" v-popover:popover1><i class="iconfont icon-menu"></i></span> -->
             <div class="nav-menu">
               <el-popover
                 ref="popover1"
@@ -111,34 +119,86 @@ export default {
           icon: 'el-icon-tickets'
         },
         {
-          name:'预算支出明细（部门）',
-          url:'Table1',
-          icon: 'el-icon-document'
+          name:'申报',
+          icon: 'el-icon-menu',
+          childern: [
+            {
+              name:'预算支出明细（部门）',
+              url:'Table1',
+              icon: 'el-icon-document'
+            },
+            {
+              name:'预算支出明细（项目）',
+              url:'Table2',
+              icon: 'el-icon-menu'
+            },
+            {
+              name:'预算支出明细',
+              url:'Table3',
+              icon: 'el-icon-more'
+            },
+            {
+              name:'院系教行费（部门）',
+              url:'Table4',
+              icon: 'el-icon-share'
+            },
+            {
+              name:'院系教行费（项目）',
+              url:'Table5',
+              icon: 'el-icon-star-on'
+            },
+            {
+              name:'部门申报合计对比表',
+              url:'Table6',
+              icon: 'el-icon-sort'
+            }
+          ]
         },
         {
-          name:'预算支出明细（项目）',
-          url:'Table2',
-          icon: 'el-icon-menu'
-        },
-        {
-          name:'预算支出明细',
-          url:'Table3',
-          icon: 'el-icon-more'
-        },
-        {
-          name:'院系教行费（部门）',
-          url:'Table4',
-          icon: 'el-icon-share'
-        },
-        {
-          name:'院系教行费（项目）',
-          url:'Table5',
-          icon: 'el-icon-star-on'
-        },
-        {
-          name:'部门申报合计对比表',
-          url:'Table6',
-          icon: 'el-icon-sort'
+          name:'预算',
+          icon: 'el-icon-menu',
+          childern: [
+            {
+              name: '部门预算执行情况',
+              icon: '',
+              url: 'btable2'
+            },
+            {
+              name: '全学院预算总体情况',
+              icon: '',
+              url: 'btable1'
+            },
+            {
+              name: '数据分析表-当年预算执行',
+              icon: '',
+              url: 'btable3'
+            },
+            {
+              name: '项目预算执行情况',
+              icon: '',
+              url: 'btable4'
+            },
+            {
+              name: '项目费用执行情况',
+              icon: '',
+              url: 'btable5-1'
+            },
+            {
+              name: '2017年与2016年预算对比',
+              icon: '',
+              url: 'btable5-2'
+            },
+            {
+              name: '2017各系教行费',
+              icon: '',
+              url: 'btable5-3'
+            },
+            {
+              name: '数据分析表-当年预算执行',
+              icon: '',
+              url: 'btable5-4'
+            }
+          ]
         }
       ],
       name: ''
