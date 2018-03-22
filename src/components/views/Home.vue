@@ -110,7 +110,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      collapse: false,
+      collapse: true,
       xsMenuShow: true,
       menu: [
         {
@@ -159,44 +159,44 @@ export default {
           icon: 'el-icon-menu',
           childern: [
             {
-              name: '部门预算执行情况',
-              icon: '',
-              url: 'btable2'
-            },
-            {
               name: '全学院预算总体情况',
               icon: '',
               url: 'btable1'
             },
             {
-              name: '数据分析表-当年预算执行',
+              name: '部门预算执行情况',
               icon: '',
-              url: 'btable3'
+              url: 'btable2'
             },
             {
               name: '项目预算执行情况',
               icon: '',
-              url: 'btable4'
+              url: 'btable3'
             },
             {
               name: '项目费用执行情况',
               icon: '',
-              url: 'btable5-1'
-            },
-            {
-              name: '2017年与2016年预算对比',
-              icon: '',
-              url: 'btable5-2'
-            },
-            {
-              name: '2017各系教行费',
-              icon: '',
-              url: 'btable5-3'
+              url: 'btable4'
             },
             {
               name: '数据分析表-当年预算执行',
               icon: '',
-              url: 'btable5-4'
+              url: 'btable5'
+            },
+            {
+              name: '2017年与2016年预算对比',
+              icon: '',
+              url: 'btable51'
+            },
+            {
+              name: '数据分析表-当年预算执行',
+              icon: '',
+              url: 'btable52'
+            },
+            {
+              name: '各系教行费',
+              icon: '',
+              url: 'btable53'
             }
           ]
         }
