@@ -19,6 +19,12 @@ const Table6 = r => require.ensure([], () => r(require('@/components/declare/Tab
 
 const btable1 = r => require.ensure([], () => r(require('@/components/budget/Table1')))
 const btable2 = r => require.ensure([], () => r(require('@/components/budget/Table2')))
+const btable3 = r => require.ensure([], () => r(require('@/components/budget/Table3')))
+const btable4 = r => require.ensure([], () => r(require('@/components/budget/Table4')))
+const btable5 = r => require.ensure([], () => r(require('@/components/budget/Table5')))
+const btable51 = r => require.ensure([], () => r(require('@/components/budget/Table5.1')))
+const btable52 = r => require.ensure([], () => r(require('@/components/budget/Table5.2')))
+const btable53 = r => require.ensure([], () => r(require('@/components/budget/Table5.3')))
 
 Vue.use(Router)
 
@@ -82,6 +88,36 @@ export default new Router({
           path: '/btable2',
           name: 'btable2',
           component: btable2
+        },
+        {
+          path: '/btable3',
+          name: 'btable3',
+          component: btable3
+        },
+        {
+          path: '/btable4',
+          name: 'btable4',
+          component: btable4
+        },
+        {
+          path: '/btable5',
+          name: 'btable5',
+          component: btable5
+        },
+        {
+          path: '/btable51',
+          name: 'btable51',
+          component: btable51
+        },
+        {
+          path: '/btable52',
+          name: 'btable52',
+          component: btable52
+        },
+        {
+          path: '/btable53',
+          name: 'btable53',
+          component: btable53
         }
       ]
     }
