@@ -3,7 +3,7 @@
     <el-col :span="24">
       <el-date-picker
         v-model="year"
-        type="year"
+        type="month"
         size="small"
         style="width:160px"
         placeholder="选择年份">
@@ -12,47 +12,50 @@
       <el-button size="small" icon="el-icon-printer" @click="exportTable">导出EXCEL</el-button>
     </el-col>
     <el-col :span="24">
-      <el-tabs v-model="activeTabName">
-        <el-tab-pane label="数据报表" name="first">
-          <div style="width:100%">
-            <el-table
-              :data="tableData"
-              size="mini"
-              style="width: 100%"
-              show-summary
-              resizable
-              border
-              v-loading="loading"
-              :max-height="tableBodyHeight"
-              >
-              <el-table-column label="重庆第二师范学院2017年预算项目明细表 （单位：万元）" width="100%" align="center" :render-header="rendeHead">
-                <el-table-column type="index" label="序号" width="50"></el-table-column>
-                <el-table-column prop="bmbh" label="部门编号" width="100" sortable></el-table-column>
-                <el-table-column prop="bmmc" label="部门名称" sortable></el-table-column>
-                <el-table-column prop="snys" label="上年预算" sortable></el-table-column>
-                <el-table-column prop="snzx" label="上年执行数" sortable></el-table-column>
-                <el-table-column prop="bnsb" label="本年一次申报数" sortable></el-table-column>
-                <el-table-column prop="bnjys" label="一下建议安排数" sortable></el-table-column>
-                <el-table-column prop="bnsb2" label="本年二次申报数" sortable></el-table-column>
-                <el-table-column prop="bnys" label="二下建议安排数" sortable></el-table-column>
-                <el-table-column prop="bnzx" label="本年执行数" sortable></el-table-column>
+        <div style="width:100%;padding-top:20px">
+          <el-table
+            :data="tableData"
+            size="mini"
+            style="width: 100%"
+            resizable
+            border
+            v-loading="loading"
+            :max-height="tableBodyHeight"
+            >
+            <!--  show-summary -->
+            <el-table-column label="重庆第二师范学院2017年具体项目预算执行情况（单位：万元）" width="100%" align="center" :render-header="rendeHead">
+              <el-table-column type="index" label="序号" width="50"></el-table-column>
+              <el-table-column label="学院/部门">
+                <el-table-column label="编号" prop="bmbh" width="80"></el-table-column>
+                <el-table-column label="名称" prop="bmmc"></el-table-column>
               </el-table-column>
-            </el-table>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="图表分析" name="second">
-          <div style="width:100%; height:500px;">
-            <chart1></chart1>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
+              <el-table-column label="项目">
+                <el-table-column label="编号" prop="xmbh" width="80"></el-table-column>
+                <el-table-column label="项目" prop="xmmc"></el-table-column>
+              </el-table-column>
+              <el-table-column label="费用">
+                <el-table-column label="编号" prop="fybh" width="80"></el-table-column>
+                <el-table-column label="费用" prop="fymc"></el-table-column>
+              </el-table-column>
+              <el-table-column label="年总预算金额">
+                <el-table-column label="年初结转和结余" prop="bnyszz"></el-table-column>
+                <el-table-column label="年初预算" prop="bnys"></el-table-column>
+                <el-table-column label="年中转入金额" prop="zfjr"></el-table-column>
+                <el-table-column label="小计" prop="xj"></el-table-column>
+              </el-table-column>
+              <el-table-column label="已执行金额" prop="zxje"></el-table-column>
+              <el-table-column label="预算结余" prop="ysjrje"></el-table-column>
+              <el-table-column label="预算执行率" prop="yszxy"></el-table-column>
+            </el-table-column>
+          </el-table>
+        </div>
+
     </el-col>
   </el-row>
 </template>
 
 <script>
 import postApi from '../../axios/index.js'
-import chart1 from '../charts/Chart'
 import { exportExcel } from '../../utlis/exportExcel'
 export default {
   name: 'table1',
@@ -63,31 +66,34 @@ export default {
       loading: true,
       activeTabName: 'first',
       year: new Date(),
-      queryLoading: false
+      queryLoading: false,
+      tableYear: new Date().getFullYear(),
     }
-  },
-  components: {
-    chart1
   },
   created() {
     let n = new Date().getFullYear()
-    this.loadTableData(n)
+    let m = new Date().getMonth()+1
+    if(m/10 <1) {
+      m = '0'+m
+    }
+    this.loadTableData(n, m)
   },
   mounted() {
     let winH = document.body.clientHeight
     this.tableBodyHeight = winH - 180
   },
   methods: {
-    loadTableData(year) {
+    loadTableData(year, month) {
       if (!year) {
         return false
       }
       this.loading = true
-      let option = { kjnd: year }
+      let option = { kjnd: year, kjqj: month}
       postApi(
-        'ESYysgl_BMhzb',
+        'ESYysgl_yszx_xybm2',
         option,
         response => {
+          console.log(response)
           if (response.data.Status == 1) {
             let obj = JSON.parse(response.data.Data)
             this.tableData = obj
@@ -111,7 +117,7 @@ export default {
         {
           class: 'renderTableHead'
         },
-        [`xxxxxxxxxxxxxxx${year}重庆第二师范学院2017年项目预算总体情况 （单位：万元）`]
+        [`重庆第二师范学院各学院、部门${year}具体项目费用预算执行情况 （单位：万元）`]
       )
     },
     queryHandler() {
@@ -121,7 +127,12 @@ export default {
       }
       this.queryLoading = true
       let n = this.year.getFullYear()
-      this.loadTableData(n)
+      let m = this.year.getMonth()+1
+      if(m/10 <1) {
+        m = '0'+m
+      }
+      this.loadTableData(n, m)
+      this.tableYear = n
     },
     exportTable() {
       exportExcel(this.tableData, '预算项目明细表')
