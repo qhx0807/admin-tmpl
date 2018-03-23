@@ -54,7 +54,7 @@
         </el-tab-pane>
       </el-tabs>
       <div style="width:100%">
-        <chart2></chart2>
+
       </div>
     </el-col>
   </el-row>
@@ -62,7 +62,6 @@
 
 <script>
 import postApi from '../../axios/index.js'
-import chart2 from '../charts/Chart2'
 import { exportExcel } from '../../utlis/exportExcel'
 export default {
   name: 'table2',
@@ -79,9 +78,6 @@ export default {
   created() {
     let n = new Date().getFullYear()
     this.loadTableData(n)
-  },
-  components: {
-    chart2
   },
   mounted () {
     let winH = document.body.clientHeight
