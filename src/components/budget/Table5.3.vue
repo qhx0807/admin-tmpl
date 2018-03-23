@@ -3,7 +3,7 @@
     <el-col :span="24">
       <el-date-picker
         v-model="year"
-        type="month"
+        type="year"
         size="small"
         style="width:160px"
         placeholder="选择年份">
@@ -19,33 +19,21 @@
             style="width: 100%"
             resizable
             border
+            show-summary
             v-loading="loading"
             :max-height="tableBodyHeight"
             >
-            <!--  show-summary -->
-            <el-table-column label="重庆第二师范学院2017年具体项目预算执行情况（单位：万元）" width="100%" align="center" :render-header="rendeHead">
-              <el-table-column type="index" label="序号" width="50"></el-table-column>
-              <el-table-column label="学院/部门">
-                <el-table-column label="编号" prop="bmbh" width="80"></el-table-column>
-                <el-table-column label="名称" prop="bmmc"></el-table-column>
-              </el-table-column>
-              <el-table-column label="项目">
-                <el-table-column label="编号" prop="xmbh" width="80"></el-table-column>
-                <el-table-column label="项目" prop="xmmc"></el-table-column>
-              </el-table-column>
-              <el-table-column label="费用">
-                <el-table-column label="编号" prop="fybh" width="80"></el-table-column>
-                <el-table-column label="费用" prop="fymc"></el-table-column>
-              </el-table-column>
-              <el-table-column label="年总预算金额">
-                <el-table-column label="年初结转和结余" prop="bnyszz"></el-table-column>
-                <el-table-column label="年初预算" prop="bnys"></el-table-column>
-                <el-table-column label="年中转入金额" prop="zfjr"></el-table-column>
-                <el-table-column label="小计" prop="xj"></el-table-column>
-              </el-table-column>
-              <el-table-column label="已执行金额" prop="zxje"></el-table-column>
-              <el-table-column label="预算结余" prop="ysjrje"></el-table-column>
-              <el-table-column label="预算执行率" prop="yszxy"></el-table-column>
+            <el-table-column label="各系部教行费明细统计数（单位：万元）" width="100%" align="center" :render-header="rendeHead">
+              <el-table-column label="编号" width="80" prop="bmbh"></el-table-column>
+              <el-table-column label="系部" prop="bmmc"></el-table-column>
+              <el-table-column label="三年比例合计数" prop="hj"></el-table-column>
+              <el-table-column label="基本运行费22%" prop="jbyxf"></el-table-column>
+              <el-table-column label="专业建设费22%" prop="zyjsf"></el-table-column>
+              <el-table-column label="教师培训16%" prop="jspsf"></el-table-column>
+              <el-table-column label="学生实习15%" prop="xssxf"></el-table-column>
+              <el-table-column label="业务费15%" prop="ywf"></el-table-column>
+              <el-table-column label="其他10%" prop="otherf"></el-table-column>
+              <el-table-column label="实际下达金额" prop="bnys"></el-table-column>
             </el-table-column>
           </el-table>
         </div>
@@ -72,25 +60,21 @@ export default {
   },
   created() {
     let n = new Date().getFullYear()
-    let m = new Date().getMonth()+1
-    if(m/10 <1) {
-      m = '0'+m
-    }
-    this.loadTableData(n, m)
+    this.loadTableData(n)
   },
   mounted() {
     let winH = document.body.clientHeight
     this.tableBodyHeight = winH - 180
   },
   methods: {
-    loadTableData(year, month) {
+    loadTableData(year) {
       if (!year) {
         return false
       }
       this.loading = true
-      let option = { kjnd: year, kjqj: month}
+      let option = { kjnd: year}
       postApi(
-        'ESYysgl_yszx_xybm2',
+        'ESYysgl_yszx_yxjxf',
         option,
         response => {
           console.log(response)
@@ -117,7 +101,7 @@ export default {
         {
           class: 'renderTableHead'
         },
-        [`重庆第二师范学院各学院、部门${year}具体项目费用预算执行情况 （单位：万元）`]
+        [`重庆第二师范学院${this.tableYear}各系部教行费明细统计数 （单位：元）`]
       )
     },
     queryHandler() {
@@ -127,11 +111,7 @@ export default {
       }
       this.queryLoading = true
       let n = this.year.getFullYear()
-      let m = this.year.getMonth()+1
-      if(m/10 <1) {
-        m = '0'+m
-      }
-      this.loadTableData(n, m)
+      this.loadTableData(n)
       this.tableYear = n
     },
     exportTable() {
