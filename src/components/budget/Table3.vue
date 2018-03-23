@@ -25,13 +25,14 @@
             <!--  show-summary -->
             <el-table-column label="重庆第二师范学院2017年具体项目预算执行情况（单位：万元）" width="100%" align="center" :render-header="rendeHead">
               <el-table-column type="index" label="序号" width="50"></el-table-column>
-              <el-table-column label="学院/部门">
+              <el-table-column label="学院/部门"
+                >
                 <el-table-column label="编号" prop="bmbh" width="80"></el-table-column>
-                <el-table-column label="名称" prop="bmmc"></el-table-column>
+                <el-table-column label="名称" :filters="filterArr" :filter-method="filterHandler" prop="bmmc"></el-table-column>
               </el-table-column>
               <el-table-column label="项目">
                 <el-table-column label="编号" prop="xmbh" width="80"></el-table-column>
-                <el-table-column label="项目" prop="xmmc"></el-table-column>
+                <el-table-column label="项目" prop="xmmc" :filters="xmArr" :filter-method="xmHandler"></el-table-column>
               </el-table-column>
               <el-table-column label="年总预算金额">
                 <el-table-column label="年初结转和结余" prop="bnyszz"></el-table-column>
@@ -58,6 +59,8 @@ export default {
   data() {
     return {
       tableData: [],
+      filterArr: [],
+      xmArr:[],
       tableBodyHeight: 500,
       loading: true,
       activeTabName: 'first',
@@ -93,6 +96,30 @@ export default {
           if (response.data.Status == 1) {
             let obj = JSON.parse(response.data.Data)
             this.tableData = obj
+            Array.prototype.unique = function() {
+                var n = {}, r = [];
+                for (var i = 0; i < this.length; i++) {
+                    if (!n[this[i].value]) {
+                        n[this[i].value] = true;
+                        r.push(this[i]);
+                    }
+                }
+                return r;
+            }
+            let arr = []
+            let xm = []
+            this.tableData.forEach((item) => {
+              arr.push({
+                text: item.bmmc,
+                value: item.bmbh
+              })
+              xm.push({
+                text: item.xmmc,
+                value: item.xmbh
+              })
+            })
+            this.filterArr = arr.unique()
+            this.xmArr = xm.unique()
           } else {
             this.$message(response.data.Message)
           }
@@ -132,6 +159,12 @@ export default {
     },
     exportTable() {
       exportExcel(this.tableData, '预算项目明细表')
+    },
+    filterHandler(value, row, column) {
+      return row.bmbh === value
+    },
+    xmHandler(value, row, column) {
+      return row.xmbh === value
     },
   }
 }

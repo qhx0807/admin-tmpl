@@ -33,10 +33,7 @@
                 <el-table-column label="编号" prop="xmbh" width="80"></el-table-column>
                 <el-table-column label="项目" prop="xmmc"></el-table-column>
               </el-table-column>
-              <el-table-column label="费用">
-                <el-table-column label="编号" prop="fybh" width="80"></el-table-column>
-                <el-table-column label="费用" prop="fymc"></el-table-column>
-              </el-table-column>
+              <el-table-column label="费用" prop="fymc"></el-table-column>
               <el-table-column label="年总预算金额">
                 <el-table-column label="年初结转和结余" prop="bnyszz"></el-table-column>
                 <el-table-column label="年初预算" prop="bnys"></el-table-column>

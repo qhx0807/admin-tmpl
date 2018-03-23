@@ -114,14 +114,14 @@ export default {
       xsMenuShow: true,
       menu: [
         {
-          name:'数据分析',
-          url:'Dashboard',
-          icon: 'el-icon-tickets'
-        },
-        {
           name:'申报',
           icon: 'el-icon-menu',
           childern: [
+            {
+              name:'数据分析',
+              url:'Dashboard',
+              icon: 'el-icon-tickets'
+            },
             {
               name:'预算支出明细（部门）',
               url:'Table1',
@@ -159,6 +159,11 @@ export default {
           icon: 'el-icon-menu',
           childern: [
             {
+              name: '数据分析',
+              icon: '',
+              url: 'btable5'
+            },
+            {
               name: '全学院预算总体情况',
               icon: '',
               url: 'btable1'
@@ -179,12 +184,7 @@ export default {
               url: 'btable4'
             },
             {
-              name: '数据分析表-当年预算执行',
-              icon: '',
-              url: 'btable5'
-            },
-            {
-              name: '2017年与2016年预算对比',
+              name: '预算对比',
               icon: '',
               url: 'btable51'
             },

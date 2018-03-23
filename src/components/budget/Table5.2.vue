@@ -26,13 +26,13 @@
             <el-table-column label="三年教行费使用情况统计表（单位：万元）" width="100%" align="center" :render-header="rendeHead">
               <el-table-column label="编号" width="80" prop="bmbh"></el-table-column>
               <el-table-column label="系部" prop="bmmc"></el-table-column>
-              <el-table-column :label="tableYear-2+'年'" prop="y1"></el-table-column>
-              <el-table-column :label="tableYear-2+'年20%'" prop="y11"></el-table-column>
-              <el-table-column :label="tableYear-1+'年'" prop="y2"></el-table-column>
-              <el-table-column :label="tableYear-1+'年30%'" prop="y21"></el-table-column>
-              <el-table-column :label="tableYear+'年'" prop="y3"></el-table-column>
-              <el-table-column :label="tableYear+'年年结转'" prop="ncye"></el-table-column>
-              <el-table-column :label="tableYear+'年50%'" prop="y31"></el-table-column>
+              <el-table-column :label="tableYear-3+'年'" prop="y1"></el-table-column>
+              <el-table-column :label="tableYear-3+'年20%'" prop="y11"></el-table-column>
+              <el-table-column :label="tableYear-2+'年'" prop="y2"></el-table-column>
+              <el-table-column :label="tableYear-2+'年30%'" prop="y21"></el-table-column>
+              <el-table-column :label="tableYear-1+'年'" prop="y3"></el-table-column>
+              <el-table-column :label="tableYear-1+'年年结转'" prop="ncye"></el-table-column>
+              <el-table-column :label="tableYear-1+'年50%'" prop="y31"></el-table-column>
               <el-table-column label="三年比例合计数" prop="hb"></el-table-column>
             </el-table-column>
           </el-table>

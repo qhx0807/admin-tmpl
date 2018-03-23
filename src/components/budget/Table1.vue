@@ -65,6 +65,9 @@ export default {
   created() {
     let n = new Date().getFullYear()
     let m = new Date().getMonth()+1
+    if(m/10 <1) {
+      m = '0'+m
+    }
     this.loadTableData(n, m)
   },
   mounted() {
@@ -107,6 +110,9 @@ export default {
       this.queryLoading = true
       let n = this.year.getFullYear()
       let m = this.year.getMonth()+1
+      if(m/10 <1) {
+        m = '0'+m
+      }
       this.loadTableData(n, m)
       this.tableYear = n
     },
