@@ -41,9 +41,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="图表分析" name="second">
-          <div style="width:100%; height:500px;">
-            <chart1></chart1>
-          </div>
+          <div style="width:1500px; height:600px;" id="chart"></div>
         </el-tab-pane>
       </el-tabs>
     </el-col>
@@ -52,7 +50,7 @@
 
 <script>
 import postApi from '../../axios/index.js'
-import chart1 from '../charts/Chart'
+import echarts from "echarts"
 import { exportExcel } from '../../utlis/exportExcel'
 export default {
   name: 'table1',
@@ -65,9 +63,6 @@ export default {
       year: new Date(),
       queryLoading: false
     }
-  },
-  components: {
-    chart1
   },
   created() {
     let n = new Date().getFullYear()
@@ -91,6 +86,104 @@ export default {
           if (response.data.Status == 1) {
             let obj = JSON.parse(response.data.Data)
             this.tableData = obj
+
+            let barList = []
+            let bmlist = []
+            let mData = {
+              snys: [],
+              snzx: [],
+              bnsb: [],
+              bnjys: [],
+              bnsb2: [],
+              bnys: [],
+            }
+            let xbar = [
+              {
+                text:"上年预算",
+                value: 'snys',
+              },
+              {
+                text:"上年执行数",
+                value: 'snzx',
+              },
+              {
+                text:"本年一次申报数",
+                value: 'bnsb',
+              },
+              {
+                text:"一下建议安排数",
+                value: 'bnjys',
+              },
+              {
+                text:"本年二次申报数",
+                value: 'bnsb2',
+              },
+              {
+                text:"'二下'数",
+                value: 'bnys',
+              }
+            ]
+            for (let i = 0; i < obj.length; i++) {
+              bmlist.push(obj[i].bmmc)
+              mData.snys.push(obj[i].snys)
+              mData.snzx.push(obj[i].snzx)
+              mData.bnsb.push(obj[i].bnsb)
+              mData.bnjys.push(obj[i].bnjys)
+              mData.bnsb2.push(obj[i].bnsb2)
+              mData.bnys.push(obj[i].bnys)
+            }
+            let seriesData = []
+            for (let e = 0; e < xbar.length; e++) {
+              seriesData.push({
+                name: xbar[e].text,
+                type: 'bar',
+                data: mData[xbar[e].value]
+              })
+            }
+
+            console.log(seriesData)
+
+            let option = {
+              title : {
+                text: '年预算项目明细表'
+              },
+              tooltip : {
+                trigger: 'axis'
+              },
+              legend: {
+                bottom: "0px",
+                data: xbar
+              },
+              toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+              },
+              calculable : true,
+              xAxis : [
+                {
+                  type : 'category',
+                  data : bmlist,
+                  axisLabel: {
+                    interval: 0,
+                    rotate: 25
+                  }
+                }
+              ],
+              yAxis : [
+                {
+                  type : 'value'
+                }
+              ],
+              series : seriesData
+            }
+            var myChart = echarts.init(document.getElementById("chart"))
+            myChart.setOption(option)
+
           } else {
             this.$message(response.data.Message)
           }
@@ -134,5 +227,9 @@ export default {
 .renderTableHead {
   text-align: center;
   margin: 0;
+}
+#chart{
+  height: 600px;
+  width: 1500px;
 }
 </style>
