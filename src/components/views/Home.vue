@@ -189,7 +189,7 @@ export default {
               url: 'btable51'
             },
             {
-              name: '数据分析表-当年预算执行',
+              name: '三年教行费使用统计',
               icon: '',
               url: 'btable52'
             },
